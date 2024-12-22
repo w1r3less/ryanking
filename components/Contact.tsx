@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import emailjs from "emailjs-com";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -13,17 +14,16 @@ export default function Contact() {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await emailjs.send(
+        "service_maw8by4",
+        "template_tmyupg8",
+        formData,
+        "6NzDE2bxURNEv_K28"
+      );
 
-      if (res.ok) {
+      if (res.status === 200) {
         setStatus("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" }); // Reset form
+        setFormData({ name: "", email: "", message: "" });
       } else {
         setStatus("Failed to send message. Please try again.");
       }
