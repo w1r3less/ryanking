@@ -1,9 +1,9 @@
 import Image from 'next/image'
 
 const projects = [
-  { id: 1, title: 'Project 1', description: 'A brief description of Project 1', image: '/placeholder.svg?height=200&width=300' },
-  { id: 2, title: 'Project 2', description: 'A brief description of Project 2', image: '/placeholder.svg?height=200&width=300' },
-  { id: 3, title: 'Project 3', description: 'A brief description of Project 3', image: '/placeholder.svg?height=200&width=300' },
+  { id: 1, title: 'icy.wtf', description: 'The site you are on rn, made with typescript', image: '/clickguy.jpeg?height=200&width=300' },
+  { id: 2, title: 'letmeputyouon.com', description: 'Mood based music recommendation chatbot: coming soon', image: '/golden-retriever-music.gif?height=200&width=300' },
+  { id: 3, title: 'Dignitas pricing', description: '200 year old CSGO pricing web scraper lol (please replace)', image: '/s-l1200.jpg?height=200&width=300' },
 ]
 
 export default function Projects() {
