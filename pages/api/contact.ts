@@ -1,37 +1,39 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import nodemailer from 'nodemailer'
+import { NextApiRequest, NextApiResponse } from "next";
+import nodemailer from "nodemailer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     const { name, email, message } = req.body;
 
     if (!name || !email || !message) {
-      return res.status(400).json({ error: 'All fields are required' });
+      return res.status(400).json({ error: "All fields are required." });
     }
 
     try {
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: "gmail",
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
+          user: process.env.EMAIL_USER, // Your Gmail email
+          pass: process.env.EMAIL_PASS, // Your Gmail app password
         },
-      });      
-
-      await transporter.sendMail({
-        from: email,
-        to: 'stezzy.scourge@gmail.com',
-        subject: `New Message from ${name}`,
-        text: message,
       });
 
-      res.status(200).json({ success: 'Message sent successfully' });
+      const mailOptions = {
+        from: process.env.EMAIL_USER, // Your Gmail email
+        to: process.env.EMAIL_USER, // Send the email to yourself
+        subject: `New Contact Message from ${name}`,
+        text: `You have a new contact form submission:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      return res.status(200).json({ message: "Email sent successfully!" });
     } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ error: 'Failed to send email' });
+      console.error("Error sending email:", error);
+      return res.status(500).json({ error: "Failed to send email." });
     }
   } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.setHeader("Allow", ["POST"]);
+    return res.status(405).json({ error: `Method ${req.method} not allowed.` });
   }
 }
