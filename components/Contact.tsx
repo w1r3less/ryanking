@@ -34,7 +34,7 @@ export default function Contact() {
       }
     } catch (err) {
       console.error(err);
-      setFormStatus('An error occurred. Please try again later.');
+      setFormStatus('Message might have got sent, who knows :o');
     }
   };
 
