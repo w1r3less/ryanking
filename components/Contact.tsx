@@ -7,7 +7,10 @@ import { Textarea } from "@/components/ui/textarea";
 import emailjs from "emailjs-com";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ user_name: "", user_email: "", user_message: "" });
+  const [formData, setFormData] = useState({
+    from_name: "",
+    message: "",
+  });
   const [status, setStatus] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -15,15 +18,19 @@ export default function Contact() {
 
     try {
       const res = await emailjs.send(
-        "service_maw8by4", // Replace with your Service ID
-        "template_pu9l0ts", // Use the correct Template ID
-        formData, // Make sure formData matches template variables
-        "6NzDE2bxURNEv_K28" // Replace with your Public Key
+        "service_maw8by4",
+        "template_pu9l0ts",
+        {
+          from_name: formData.from_name,
+          message: formData.message,
+          to_name: "Stezzy Scourge",
+        },
+        "6NzDE2bxURNEv_K28"
       );
 
       if (res.status === 200) {
         setStatus("Message sent successfully!");
-        setFormData({ user_name: "", user_email: "", user_message: "" });
+        setFormData({ from_name: "", message: "" });
       } else {
         setStatus("Failed to send message. Please try again.");
       }
@@ -40,17 +47,8 @@ export default function Contact() {
           <Input
             type="text"
             placeholder="Your Name"
-            value={formData.user_name}
-            onChange={(e) => setFormData({ ...formData, user_name: e.target.value })}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Input
-            type="email"
-            placeholder="Your Email"
-            value={formData.user_email}
-            onChange={(e) => setFormData({ ...formData, user_email: e.target.value })}
+            value={formData.from_name}
+            onChange={(e) => setFormData({ ...formData, from_name: e.target.value })}
             required
           />
         </div>
@@ -58,8 +56,8 @@ export default function Contact() {
           <Textarea
             placeholder="Your Message"
             rows={4}
-            value={formData.user_message}
-            onChange={(e) => setFormData({ ...formData, user_message: e.target.value })}
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             required
           />
         </div>
