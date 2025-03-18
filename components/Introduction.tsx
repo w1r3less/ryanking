@@ -22,7 +22,7 @@ export default function Introduction() {
         <h1 className="text-4xl font-bold mb-2 text-white">Ryan King</h1>
         <p className="text-xl text-gray-300 mb-4">Software Engineer</p>
         <p className="max-w-2xl mx-auto text-gray-200">
-          I like to code...
+          yo idk why people are seeing this page, if someone knows please contact me below and leave ur contact details. i didnt rug you idek how im just a humble little coder guy
         </p>
       </div>
     </section>
